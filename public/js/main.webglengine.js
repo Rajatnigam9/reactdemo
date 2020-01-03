@@ -169,8 +169,8 @@ var WebglEngine = {
         //scene.add(groundPlane);
         var smileyMouthPath = new THREE.Path()
             .moveTo(20, 20)
-            .quadraticCurveTo(500, 170, 800, 20)
-            .quadraticCurveTo(500, 100, 100, 25);
+            .quadraticCurveTo(500, 300, 800, 20)
+            .quadraticCurveTo(500, 200, 100, 25);
         var smileyMouthPathLeftFlat = new THREE.Path()
             .moveTo(20, 20)
             .quadraticCurveTo(100, 100, 200, 20)
