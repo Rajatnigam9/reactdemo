@@ -169,13 +169,56 @@ var WebglEngine = {
         //scene.add(groundPlane);
         var smileyMouthPath = new THREE.Path()
             .moveTo(20, 20)
-            .quadraticCurveTo(500, 700, 800, 20)
-            .quadraticCurveTo(500, 400, 100, 25);
+            .quadraticCurveTo(500, 600, 1000, 100)
+            .quadraticCurveTo(500, 400, 120, 100);
         var smileyMouthPathLeftFlat = new THREE.Path()
             .moveTo(40, 40)
             .quadraticCurveTo(100, 100, 200, 20)
             .quadraticCurveTo(100, 60, 60, 20);
             smileyMouthPathLeftFlat.autoClose=true;
+        var sharpArray=[];
+            // for(var i=0;i<5;i++)
+            // {
+            //     var smileyMouthPathsharp = new THREE.Path()
+            //     .moveTo(20*(i*10), 20+(i*10))
+            //     .quadraticCurveTo(500/(i+1), 600/(i+1), 1000/(i+1), 100/(i+1))
+            //     .quadraticCurveTo(500/(i+1), 400/(i+1), 120/(i+1), 100/(i+1));
+            //     smileyMouthPathsharp.autoClose=true;
+            //     smileyMouthPathsharp.autoClose = true;
+            //     var points = smileyMouthPathsharp.getPoints();
+            //     var spacedPoints = smileyMouthPathsharp.getSpacedPoints(50);
+            //     var geometryPoints = new THREE.BufferGeometry().setFromPoints(points);
+            //     var geometrySpacedPoints = new THREE.BufferGeometry().setFromPoints(spacedPoints);
+            //     var line = new THREE.Line(geometryPoints, new THREE.MeshBasicMaterial({ color: 0xf000f0 }));
+            //     scene.add(line);
+            //     sharpArray.push(smileyMouthPath);
+            // }
+            
+var radius = 10;
+var turns = 3;
+var objPerTurn = 30;
+
+var angleStep = (Math.PI * 2) / objPerTurn;
+var heightStep = 0.5;
+var points = smileyMouthPath.getPoints();
+var geom = new THREE.BufferGeometry().setFromPoints(points);;
+
+for (let i = 0; i < turns * objPerTurn; i++) {
+  let plane = new THREE.CatmullRomCurve3(geom, new THREE.MeshBasicMaterial({
+    color: Math.random() * 0x888888 + 0x888888
+  }));
+  
+  // position
+  plane.position.set(
+    Math.cos(angleStep * i) * radius,
+    heightStep * i,
+    Math.sin(angleStep * i) * radius
+  );
+  
+  // rotation
+  plane.rotation.y = - angleStep * i;
+  scene.add(plane);
+}
         var smileyMouthPathsharp = new THREE.Path()
             .moveTo(20, 20)
             .quadraticCurveTo(500, 600, 1000, 100)
@@ -187,13 +230,13 @@ var WebglEngine = {
         var geometryPoints = new THREE.BufferGeometry().setFromPoints(points);
         var geometrySpacedPoints = new THREE.BufferGeometry().setFromPoints(spacedPoints);
         var line = new THREE.Line(geometryPoints, new THREE.LineBasicMaterial({ color: 0xf000f0 }));
-        scene.add(line);
+        //scene.add(line);
         points=smileyMouthPathsharp.getPoints();
         spacedPoints = smileyMouthPathsharp.getSpacedPoints(50);
         geometryPoints = new THREE.BufferGeometry().setFromPoints(points);
         geometrySpacedPoints = new THREE.BufferGeometry().setFromPoints(spacedPoints);
         line = new THREE.Line(geometryPoints, new THREE.LineBasicMaterial({ color: 0xf000f0 }));
-        scene.add(line);
+        //scene.add(line);
         //Solar pane geometry
         var planeGeometry = new THREE.PlaneGeometry(solarPaneSize.x, solarPaneSize.y);
         var planematerial = new THREE.MeshBasicMaterial({ color: SolarTopsUIConfig.SolarPanelsColor, side: THREE.DoubleSide });
