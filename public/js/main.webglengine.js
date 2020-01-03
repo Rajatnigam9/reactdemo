@@ -169,23 +169,31 @@ var WebglEngine = {
         //scene.add(groundPlane);
         var smileyMouthPath = new THREE.Path()
             .moveTo(20, 20)
-            .quadraticCurveTo(500, 300, 800, 20)
-            .quadraticCurveTo(500, 200, 100, 25);
+            .quadraticCurveTo(500, 700, 800, 20)
+            .quadraticCurveTo(500, 400, 100, 25);
         var smileyMouthPathLeftFlat = new THREE.Path()
-            .moveTo(20, 20)
+            .moveTo(40, 40)
             .quadraticCurveTo(100, 100, 200, 20)
             .quadraticCurveTo(100, 60, 60, 20);
+            smileyMouthPathLeftFlat.autoClose=true;
         var smileyMouthPathsharp = new THREE.Path()
             .moveTo(20, 20)
-            .quadraticCurveTo(100, 100, 200, 20)
-            .quadraticCurveTo(100, 60, 20, 20);
+            .quadraticCurveTo(500, 600, 1000, 100)
+            .quadraticCurveTo(500, 400, 120, 100);
+            smileyMouthPathsharp.autoClose=true;
         smileyMouthPath.autoClose = true;
         var points = smileyMouthPath.getPoints();
         var spacedPoints = smileyMouthPath.getSpacedPoints(50);
         var geometryPoints = new THREE.BufferGeometry().setFromPoints(points);
         var geometrySpacedPoints = new THREE.BufferGeometry().setFromPoints(spacedPoints);
         var line = new THREE.Line(geometryPoints, new THREE.LineBasicMaterial({ color: 0xf000f0 }));
-        scene.add(line)
+        scene.add(line);
+        points=smileyMouthPathsharp.getPoints();
+        spacedPoints = smileyMouthPathsharp.getSpacedPoints(50);
+        geometryPoints = new THREE.BufferGeometry().setFromPoints(points);
+        geometrySpacedPoints = new THREE.BufferGeometry().setFromPoints(spacedPoints);
+        line = new THREE.Line(geometryPoints, new THREE.LineBasicMaterial({ color: 0xf000f0 }));
+        scene.add(line);
         //Solar pane geometry
         var planeGeometry = new THREE.PlaneGeometry(solarPaneSize.x, solarPaneSize.y);
         var planematerial = new THREE.MeshBasicMaterial({ color: SolarTopsUIConfig.SolarPanelsColor, side: THREE.DoubleSide });
@@ -205,7 +213,7 @@ var WebglEngine = {
         // load a SVG resource
         loader.load(
             // resource URL
-            'svg/Landing_midwam_4.svg',
+            '',
             //'https://svgshare.com/i/H53.svg',
             // called when the resource is loaded
             function (data) {
@@ -285,7 +293,7 @@ var WebglEngine = {
         // load a SVG resource
         loader.load(
             // resource URL
-            'svg/tiger.svg',
+            '',
             // called when the resource is loaded
             function (data) {
 
