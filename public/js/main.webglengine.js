@@ -167,7 +167,25 @@ var WebglEngine = {
         groundPlane.rotation.x = 2 * Math.PI;
         groundPlane.position.set(0, 0, 0);
         //scene.add(groundPlane);
-
+        var smileyMouthPath = new THREE.Path()
+            .moveTo(20, 20)
+            .quadraticCurveTo(500, 170, 800, 20)
+            .quadraticCurveTo(500, 100, 100, 25);
+        var smileyMouthPathLeftFlat = new THREE.Path()
+            .moveTo(20, 20)
+            .quadraticCurveTo(100, 100, 200, 20)
+            .quadraticCurveTo(100, 60, 60, 20);
+        var smileyMouthPathsharp = new THREE.Path()
+            .moveTo(20, 20)
+            .quadraticCurveTo(100, 100, 200, 20)
+            .quadraticCurveTo(100, 60, 20, 20);
+        smileyMouthPath.autoClose = true;
+        var points = smileyMouthPath.getPoints();
+        var spacedPoints = smileyMouthPath.getSpacedPoints(50);
+        var geometryPoints = new THREE.BufferGeometry().setFromPoints(points);
+        var geometrySpacedPoints = new THREE.BufferGeometry().setFromPoints(spacedPoints);
+        var line = new THREE.Line(geometryPoints, new THREE.LineBasicMaterial({ color: 0xf000f0 }));
+        scene.add(line)
         //Solar pane geometry
         var planeGeometry = new THREE.PlaneGeometry(solarPaneSize.x, solarPaneSize.y);
         var planematerial = new THREE.MeshBasicMaterial({ color: SolarTopsUIConfig.SolarPanelsColor, side: THREE.DoubleSide });
