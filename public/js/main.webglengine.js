@@ -167,10 +167,10 @@ var WebglEngine = {
         groundPlane.rotation.x = 2 * Math.PI;
         groundPlane.position.set(0, 0, 0);
         //scene.add(groundPlane);
-        var smileyMouthPath = new THREE.Path()
-            .moveTo(20, 20)
-            .quadraticCurveTo(500, 600, 1000, 100)
-            .quadraticCurveTo(500, 400, 120, 100);
+        var smileyMouthPath = new THREE.Shape()
+            .moveTo(0, 20)
+            .quadraticCurveTo(100, 100, 200, 20)
+            .quadraticCurveTo(100, 60, 20, 20);
         var smileyMouthPathLeftFlat = new THREE.Path()
             .moveTo(40, 40)
             .quadraticCurveTo(100, 100, 200, 20)
@@ -200,13 +200,12 @@ var objPerTurn = 30;
 
 var angleStep = (Math.PI * 2) / objPerTurn;
 var heightStep = 0.5;
-var points = smileyMouthPath.getPoints();
-var geom = new THREE.BufferGeometry().setFromPoints(points);;
-
+var geom = new THREE.ShapeBufferGeometry(smileyMouthPath);
+geom.rotateX( Math.PI * - 0.5 );
 for (let i = 0; i < turns * objPerTurn; i++) {
-  let plane = new THREE.CatmullRomCurve3(geom, new THREE.MeshBasicMaterial({
-    color: Math.random() * 0x888888 + 0x888888
-  }));
+    let plane = new THREE.Mesh(geom, new THREE.MeshBasicMaterial({
+        color: Math.random() * 0x888888 + 0x888888
+      }));
   
   // position
   plane.position.set(
@@ -214,11 +213,23 @@ for (let i = 0; i < turns * objPerTurn; i++) {
     heightStep * i,
     Math.sin(angleStep * i) * radius
   );
-  
   // rotation
   plane.rotation.y = - angleStep * i;
   scene.add(plane);
 }
+function update(){
+    camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+    camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+    camera.lookAt( scene.position );
+ 
+    plane.rotation.y -= 0.005;
+ 
+    renderer.render( scene, camera );
+ }
+ function onMouseMove( event ) {
+    mouseX = event.clientX - halfWidth;
+    mouseY = event.clientY - halfHeight;
+  }
         var smileyMouthPathsharp = new THREE.Path()
             .moveTo(20, 20)
             .quadraticCurveTo(500, 600, 1000, 100)
@@ -396,6 +407,7 @@ for (let i = 0; i < turns * objPerTurn; i++) {
 
     },
     RenderScene: function () {
+        update();
         renderer.render(scene, camera);
     },
     Set3DMode: function (setMode) {
