@@ -410,18 +410,16 @@ var WebglEngine = {
 
 
         var turns = 5;
-        var radius = 10;
+        var radius = 20;
         var objPerTurn = 30;
 
         var angleStep = (Math.PI * 2) / objPerTurn;
         var heightStep = 0.5;
 
         var shape = new THREE.Shape()
-            .moveTo(100, 200)
-            .quadraticCurveTo(200, 300, 300, 200)
-            .bezierCurveTo(350, 225, 350, 250, 300, 300)
-            .quadraticCurveTo(200, 400, 100, 300)
-            .quadraticCurveTo(25, 250, 100, 200);
+            .moveTo(100, 100)
+            .quadraticCurveTo(500, 600, 1000, 100)
+            .quadraticCurveTo(500, 400, 120, 100);
 
         var geom = new THREE.ShapeBufferGeometry(shape);
         geom.rotateX(Math.PI * - 0.5);
